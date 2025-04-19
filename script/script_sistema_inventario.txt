@@ -1,0 +1,159 @@
+-- VISTA DE USUARIOS
+CREATE VIEW vista_usuario
+AS
+SELECT u.id, u.usuario, u.password, p.razonsocial, r.rol 
+FROM usuario u 
+INNER JOIN persona p ON u.id_persona = p.id
+INNER JOIN rol r ON r.id =u.id_rol
+WHERE u.estado = 1;
+
+-- VISTA PRODUCTO
+CREATE VIEW vista_producto
+AS
+SELECT p.producto,m.marca, p.caracteristicas 
+FROM producto p
+INNER JOIN marca m ON p.id_marca = m.id;
+
+-- VISTA PERSONA
+CREATE VIEW vista_persona
+AS
+SELECT p.id, p.razonsocial, td.tipo_documento, p.num_doc, p.direccion, p.telefono, p.correo, p.id_tipo_persona 
+FROM persona p
+INNER JOIN tipo_documento td ON td.id_tipo_documento = p.id_tipo_documento
+WHERE p.estado = 1;
+
+-- VISTA DE ARTICULOS
+CREATE VIEW vista_articulo
+AS
+SELECT a.id,p.producto, a.cantidad, a.precio, a.sub_total, a.descuento, a.igv, a.total, a.stock_inicial, a.stock_final
+FROM articulo a
+INNER JOIN producto p ON a.id_producto=p.id
+WHERE a.stock_final>0 AND a.estado=1;
+
+
+-- PROCEDIMIENTO ALMACENADO REGISTRO DE PERSONAS
+DELIMITER //
+CREATE PROCEDURE pro_registro_persona(IN _razonsocial VARCHAR(150),IN _id_documento int(11),IN _num_doc varchar(15),IN _direccion VARCHAR(150),IN _telefono VARCHAR(11),IN _correo VARCHAR(100), IN _id_tipo_persona int(11))
+BEGIN
+INSERT INTO persona(id, razonsocial, id_tipo_documento, num_doc, direccion, telefono, correo, id_tipo_persona, estado) VALUES (null, _razonsocial,_id_documento, _num_doc, _direccion, _telefono, _correo,_id_tipo_persona, 1);
+END;
+// 
+
+-- PROCEDIMIENTO ALMACENADO MODIFICAR DE PERSONA
+DELIMITER //
+CREATE PROCEDURE pro_actualizar_persona(IN _razonsocial VARCHAR(150),IN _num_doc VARCHAR(15),IN _direccion VARCHAR(150),IN _telefono VARCHAR(11),IN _correo VARCHAR(100),_id INT(11))
+BEGIN
+UPDATE persona SET razonsocial= _razonsocial, num_doc=_num_doc, direccion=_direccion, telefono= _telefono, correo= _correo WHERE id=_id;
+END;
+// 
+
+-- PROCEDIMIENTO ALMACENADO ELEMINAR DE PERSONA
+DELIMITER //
+CREATE PROCEDURE pro_eliminar_persona(_id INT(11))
+BEGIN
+UPDATE persona SET estado= 0 WHERE id=_id;
+END;
+//
+
+-- PROCEDIMIENTO ALMACENADO REGISTRO USUARIO
+DELIMITER //
+CREATE PROCEDURE pro_registro_usuario(IN user varchar(20),IN pass varchar(20),IN per varchar(100),IN rl varchar(20))
+BEGIN
+INSERT INTO usuario(id, usuario, password, id_persona, id_rol, estado) VALUES
+(null,user,pass,(SELECT p.id FROM persona p WHERE p.razonsocial = per),(SELECT r.id FROM rol r WHERE r.rol =rl),1);
+END;
+//
+
+-- PROCEDIMIENTO ALMACENADO ACTUALIZAR USUARIO
+DELIMITER //
+CREATE PROCEDURE pro_actualizar_usuario(IN user varchar(20),IN pass varchar(20),IN per varchar(100),IN rl varchar(20), IN _id int(11))
+BEGIN
+UPDATE usuario SET usuario = user,password=pass,id_persona=(SELECT p.id FROM persona p WHERE p.razonsocial = per),id_rol=(SELECT r.id FROM rol r WHERE r.rol =rl) WHERE id = _id;
+END;
+//
+
+-- PROCEDIMIENTO ALMACENADO ELIMINAR USUARIO
+DELIMITER //
+CREATE PROCEDURE pro_eliminar_usuario(IN _id int(11))
+BEGIN
+UPDATE usuario SET estado=0 WHERE id = _id;
+END;
+//
+
+-- PROCEDIMIENTO ALMACENADO REGISTRO DE PRODUCTO
+DELIMITER //
+CREATE PROCEDURE pro_registro_producto(IN _producto varchar(100), IN _marca varchar(50), IN carac varchar(100))
+BEGIN
+INSERT INTO producto(id, producto, id_marca, caracteristicas) VALUES (null,_producto,(SELECT m.id FROM marca m WHERE m.marca = _marca),carac);
+END;
+//
+
+-- PROCEDIMIENTO ALMACENADO ACTUALIZAR PRODUCTO
+DELIMITER //
+CREATE PROCEDURE pro_actualizar_producto(IN _producto varchar(100),IN _marca varchar(50), IN carac varchar(100),_id int(11))
+BEGIN
+UPDATE producto SET producto = _producto, id_marca=(SELECT m.id FROM marca m WHERE m.marca = _marca),caracteristicas = carac  WHERE id = _id;
+END;
+//
+
+-- PROCEDIMIENTO ALMACENADO REGISTRO DE COMPRA
+DELIMITER //
+CREATE PROCEDURE pro_registro_compra(IN _codigo VARCHAR(20),IN _serie VARCHAR(20),IN _id_proveedor VARCHAR(100),IN _id_trabajador VARCHAR(100),IN _descripcion VARCHAR(150),IN _sub_total DOUBLE(11,2),IN _descuento DOUBLE(11,2),IN _igv DOUBLE(11,2),IN _total DOUBLE(11,2),IN _archivo VARCHAR(150),IN _fecha_compra VARCHAR(20))
+BEGIN
+INSERT INTO compra(id, codigo, serie, id_proveedor, id_trabajador, descripcion, sub_total, descuento, igv, total, archivo, fecha_compra) VALUES (NULL, _codigo, _serie,(SELECT p.id FROM persona p WHERE p.razonsocial = _id_proveedor),(SELECT p.id FROM persona p WHERE p.razonsocial = _id_trabajador) , _descripcion, _sub_total, _descuento, _igv, _total, _archivo, _fecha_compra);
+END;
+//
+
+
+-- PROCEDIMIENTO ALMACENADO REGISTRO DE ARTICULO
+DELIMITER //
+CREATE PROCEDURE pro_registro_articulo(IN _id_compra INT(11),IN _id_producto VARCHAR(100),IN _id_unidad VARCHAR(29),IN _cantidad INT(11),IN _precio DOUBLE(11,2),IN _sub_total DOUBLE(11,2),IN _descuento DOUBLE(11,2),IN _total DOUBLE(11,2))
+BEGIN
+INSERT INTO articulo(id, id_compra, id_producto, id_unidad, cantidad, precio, sub_total, descuento, igv, total, stock_inicial, stock_final, estado) VALUES (NULL, _id_compra,(SELECT p.id FROM producto p WHERE p.producto = _id_producto),(SELECT u.id FROM unidad_medida u WHERE u.unidad_medida = _id_unidad) , _cantidad, _precio, _sub_total, _descuento,0, _total,_cantidad,_cantidad,1);
+END;
+//
+
+-- PROCEDIMIENTO ALMACENADO REGISTRO DE DESPACHO
+DELIMITER //
+CREATE PROCEDURE pro_registro_despacho(IN _id_usuario varchar(50),IN _id_personal varchar(50),IN _descripcion varchar(200),IN _numero int(11)) 
+BEGIN
+INSERT INTO des_pacho(id, id_usuario, id_personal, descripcion, numero) 
+VALUES (null,(SELECT p.id FROM persona p WHERE p.razonsocial = _id_usuario),(SELECT p.id FROM persona p WHERE p.razonsocial = _id_personal),_descripcion,_numero);
+END;
+//
+
+-- PROCEDIMIENTO ALMACENADO ACTUALIZAR DE ARTICULO STOCK FINAL Y ESTADO
+DELIMITER //
+CREATE PROCEDURE pro_actualizar_articulo_stock_final(IN _id int(11),IN _stock_final int(11), IN est int(11))
+BEGIN
+UPDATE articulo SET stock_final = _stock_final,estado = est WHERE id = _id;
+END;
+//
+
+-- PROCEDIMIENTO ALMACENADO REGISTRO DE DETALLE DESPACHO
+DELIMITER //
+CREATE PROCEDURE pro_ingresar_detalle_despacho(IN _id_despacho int(11),IN _id_articulo int(11),IN _cantidad int(11))
+BEGIN
+INSERT INTO detalle_despacho(id, id_despacho, id_articulo, cantidad) 
+VALUES (null,_id_despacho, _id_articulo, _cantidad);
+END;
+//
+
+-- Consulta de artículos con JOIN a compras (filtrado por fecha de compra)
+SELECT a.id,pr.razonsocial, c.sub_total, c.descuento, c.igv, c.total, p.producto,a.cantidad, a.precio, a.sub_total, a.descuento, a.igv, a.total, a.stock_inicial, a.stock_final, a.estado, c.fecha_compra
+FROM articulo a
+JOIN compra c ON a.id_compra = c.id
+JOIN producto p ON a.id_producto = p.id
+JOIN persona pr ON c.id_proveedor = pr.id
+WHERE c.fecha_compra BETWEEN '10-04-2024' AND '21-01-2025'
+ORDER BY c.fecha_compra DESC, a.id ASC;
+
+
+-- Consulta de artículos con JOIN a compras (filtrado por fecha de compra)
+SELECT pr.razonsocial, p.producto,a.cantidad, a.precio, a.sub_total, a.descuento, a.igv, a.total, a.stock_inicial, a.stock_final, c.fecha_compra
+FROM articulo a
+JOIN compra c ON a.id_compra = c.id
+JOIN producto p ON a.id_producto = p.id
+JOIN persona pr ON c.id_proveedor = pr.id
+WHERE c.fecha_compra BETWEEN '10-04-2024' AND '21-01-2025'
+ORDER BY c.fecha_compra DESC, a.id ASC;
