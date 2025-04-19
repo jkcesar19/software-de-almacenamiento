@@ -1,6 +1,5 @@
 package com.system.view.product;
 
-
 import com.system.business.MarcaBo;
 import com.system.business.ProductoBo;
 import com.system.conexion.TextPrompt;
@@ -9,20 +8,19 @@ import java.awt.Dimension;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JOptionPane;
 
-
 public class registro_producto extends javax.swing.JPanel {
-
-   Producto objProducto = new Producto();
-   private DefaultComboBoxModel Marca;
+    
+    Producto objProducto = new Producto();
+    private DefaultComboBoxModel Marca;
     char opt = 'N';
-
+    
     public registro_producto() {
         initComponents();
         plaseholder();
         cargarComboMarca();
-
+        
     }
-
+    
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -127,7 +125,7 @@ public class registro_producto extends javax.swing.JPanel {
                 }
                 break;
             case 'M':
-
+                
                 break;
         }
     }//GEN-LAST:event_btnAgregarMousePressed
@@ -145,21 +143,22 @@ public class registro_producto extends javax.swing.JPanel {
 
     private void plaseholder() {
         TextPrompt prueba0 = new TextPrompt(" Ingrese el producto a registrar", this.jtex_producto);
-         TextPrompt prueba1 = new TextPrompt(" Ingrese el caracteristicas del producto", this.jtex_caracteristicas);
-
+        TextPrompt prueba1 = new TextPrompt(" Ingrese el caracteristicas del producto", this.jtex_caracteristicas);
+        
     }
+
     private void cargarComboMarca() {
         try {
             Marca = MarcaBo.obtenerMarca();
             jComboBxMarca.setModel(Marca);
             jComboBxMarca.setPreferredSize(new Dimension(600, 22));
-
+            
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, e.getMessage());
             e.printStackTrace();
         }
     }
-
+    
     private void registrar() {
         this.cargar_obj();
         try {
@@ -167,29 +166,31 @@ public class registro_producto extends javax.swing.JPanel {
                 JOptionPane.showMessageDialog(null, "Se Registró Correctamente", "MENSAJE --> Producto", JOptionPane.INFORMATION_MESSAGE);
                 this.cargar_registro_actualiza();
                 this.limpiarcampos();
-
+                
             } else {
                 JOptionPane.showMessageDialog(this, "No se pudo Registrar", "MENSAJE --> Producto", JOptionPane.ERROR_MESSAGE);
                 this.limpiarcampos();
-
+                
             }
-
+            
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, e.getMessage(), "MENSAJE --> Producto", JOptionPane.ERROR_MESSAGE);
         }
     }
-
+    
     private void cargar_obj() {
-
-     objProducto.setProducto(this.jtex_producto.getText());
+        objProducto.setCaracteristicas(this.jtex_caracteristicas.getText());
+        objProducto.setProducto(this.jtex_producto.getText());
+        objProducto.setMarca(this.jComboBxMarca.getSelectedItem().toString());
         
     }
-
+    
     private void limpiarcampos() {
         this.jtex_producto.setText("");
+        this.jtex_caracteristicas.setText("");
         
     }
-
+    
     private void cargar_registro_actualiza() throws Exception {
 //        registro_actualiza p1 = new registro_actualiza();
 //        p1.setSize(750, 343);

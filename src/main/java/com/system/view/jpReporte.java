@@ -45,10 +45,8 @@ public class jpReporte extends javax.swing.JPanel {
         initComponents();
 
 //        cargarTabla();
-        loadTableMateria();
-        personalizarJtable();
-
-        tableAccionsalida();
+        loadTableIngreso();
+        tableAccionEntrada();
     }
 
     @SuppressWarnings("unchecked")
@@ -56,9 +54,9 @@ public class jpReporte extends javax.swing.JPanel {
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
-        jPanel2 = new javax.swing.JPanel();
+        btn_salida = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
-        jPanel3 = new javax.swing.JPanel();
+        btn_ingreso = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
@@ -68,51 +66,51 @@ public class jpReporte extends javax.swing.JPanel {
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
 
-        jPanel2.addMouseListener(new java.awt.event.MouseAdapter() {
+        btn_salida.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mousePressed(java.awt.event.MouseEvent evt) {
-                jPanel2MousePressed(evt);
+                btn_salidaMousePressed(evt);
             }
         });
 
         jLabel2.setText("Salida");
 
-        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
-        jPanel2.setLayout(jPanel2Layout);
-        jPanel2Layout.setHorizontalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
+        javax.swing.GroupLayout btn_salidaLayout = new javax.swing.GroupLayout(btn_salida);
+        btn_salida.setLayout(btn_salidaLayout);
+        btn_salidaLayout.setHorizontalGroup(
+            btn_salidaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(btn_salidaLayout.createSequentialGroup()
                 .addGap(72, 72, 72)
                 .addComponent(jLabel2)
                 .addContainerGap(95, Short.MAX_VALUE))
         );
-        jPanel2Layout.setVerticalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+        btn_salidaLayout.setVerticalGroup(
+            btn_salidaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, btn_salidaLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, 28, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
-        jPanel3.addMouseListener(new java.awt.event.MouseAdapter() {
+        btn_ingreso.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mousePressed(java.awt.event.MouseEvent evt) {
-                jPanel3MousePressed(evt);
+                btn_ingresoMousePressed(evt);
             }
         });
 
         jLabel1.setText("Ingreso");
 
-        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
-        jPanel3.setLayout(jPanel3Layout);
-        jPanel3Layout.setHorizontalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel3Layout.createSequentialGroup()
+        javax.swing.GroupLayout btn_ingresoLayout = new javax.swing.GroupLayout(btn_ingreso);
+        btn_ingreso.setLayout(btn_ingresoLayout);
+        btn_ingresoLayout.setHorizontalGroup(
+            btn_ingresoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(btn_ingresoLayout.createSequentialGroup()
                 .addGap(58, 58, 58)
                 .addComponent(jLabel1)
                 .addContainerGap(74, Short.MAX_VALUE))
         );
-        jPanel3Layout.setVerticalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
+        btn_ingresoLayout.setVerticalGroup(
+            btn_ingresoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, btn_ingresoLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 28, Short.MAX_VALUE)
                 .addContainerGap())
@@ -183,9 +181,9 @@ public class jpReporte extends javax.swing.JPanel {
                         .addComponent(jLabel3))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(21, 21, 21)
-                        .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(btn_ingreso, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
-                        .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(btn_salida, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(btn_reporte_fecha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
@@ -201,8 +199,8 @@ public class jpReporte extends javax.swing.JPanel {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addComponent(btn_ingreso, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btn_salida, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addComponent(btn_reporte_fecha, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 262, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -221,17 +219,20 @@ public class jpReporte extends javax.swing.JPanel {
         );
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jPanel3MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel3MousePressed
+    private void btn_ingresoMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_ingresoMousePressed
+        loadTableIngreso();
+        tableAccionEntrada();
+        System.out.println("ingreso");
+
+    }//GEN-LAST:event_btn_ingresoMousePressed
+
+    private void btn_salidaMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_salidaMousePressed
         loadTableMateria();
         personalizarJtable();
-//        tableAccionsalida();
+        tableAccionsalida();
+        System.out.println("salida");
 
-        System.out.println("Ingreso");
-    }//GEN-LAST:event_jPanel3MousePressed
-
-    private void jPanel2MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel2MousePressed
-        loadTableIngreso();
-    }//GEN-LAST:event_jPanel2MousePressed
+    }//GEN-LAST:event_btn_salidaMousePressed
 
     private void btn_reporte_fechaMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_reporte_fechaMousePressed
         this.ingresar_fecha();
@@ -239,14 +240,14 @@ public class jpReporte extends javax.swing.JPanel {
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JPanel btn_ingreso;
     private javax.swing.JPanel btn_reporte_fecha;
+    private javax.swing.JPanel btn_salida;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JPanel jPanel2;
-    private javax.swing.JPanel jPanel3;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable_ingreso_Salida;
     // End of variables declaration//GEN-END:variables
@@ -298,13 +299,14 @@ public class jpReporte extends javax.swing.JPanel {
             @Override
             public void onPdf(int row) {
                 cargarid();
-                
+
             }
 
         };
         jTable_ingreso_Salida.getColumnModel().getColumn(8).setCellRenderer(new TableActionCellRender());
         jTable_ingreso_Salida.getColumnModel().getColumn(8).setCellEditor(new TableActionCellEditor(event));
     }
+
     private void cargarid() {
         try {
             int index = jTable_ingreso_Salida.getSelectedRow();
@@ -314,7 +316,26 @@ public class jpReporte extends javax.swing.JPanel {
         }
     }
 
-    private void cargarpfd(String valor1,String valor2) {
+    private void cargar_pdf(int id) {
+        try {
+            Connection con = null;
+            JasperReport reporteJasper = null;
+            String dir = "C:\\Users\\llagu\\OneDrive\\Escritorio\\Proyecto 2025\\NetBeans\\sistema_almacenamiento\\src\\main\\java\\com\\system\\report\\reporte_ingreso_unitario.jasper";
+            Map parametro = new HashMap();
+            parametro.put("paran1", id); // Primer parámetro de texto
+            con = Conexion.getConexion();
+
+            reporteJasper = (JasperReport) JRLoader.loadObjectFromFile(dir);
+            JasperPrint mostrarReporte = JasperFillManager.fillReport(dir, parametro, con);
+            JasperViewer view = new JasperViewer(mostrarReporte, false);
+            view.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+            view.setVisible(true);
+        } catch (Exception JRException) {
+            JOptionPane.showMessageDialog(null, "Error al intentar abrir el reporte");
+        }
+    }
+
+    private void cargarpfd(String valor1, String valor2) {
         try {
             Connection con = null;
             JasperReport reporteJasper = null;
@@ -335,10 +356,8 @@ public class jpReporte extends javax.swing.JPanel {
 
     }
 
-   
-
     private void ingresar_fecha() {
-          // Crear un JPanel para agregar los componentes
+        // Crear un JPanel para agregar los componentes
         JPanel panel = new JPanel();
         panel.setLayout(new GridLayout(4, 2)); // Disposición de 4 filas y 2 columnas
 
@@ -349,14 +368,13 @@ public class jpReporte extends javax.swing.JPanel {
         JLabel label3 = new JLabel("FECHA 2: 20-05-2025");
         JTextField textField2 = new JTextField(10);
         textField2.setPreferredSize(new Dimension(200, 25));
-       
+
         // Agregar los componentes al panel
         panel.add(label1);
         panel.add(textField1);
-        
+
         panel.add(label3);
         panel.add(textField2);
-
 
         // Mostrar el panel en un JOptionPane
         int option = JOptionPane.showConfirmDialog(null, panel, "INGRESO DE FECHAS", JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);
@@ -367,8 +385,21 @@ public class jpReporte extends javax.swing.JPanel {
             String valor2 = textField2.getText().trim();
 
             // Enviar los datos para generar el reporte 
-            this.cargarpfd(valor1,valor2);
-            
+            this.cargarpfd(valor1, valor2);
+
         }
+    }
+
+    private void tableAccionEntrada() {
+        TableActionEvent event = new TableActionEvent() {
+            @Override
+            public void onPdf(int row) {
+                cargarid();
+                cargar_pdf(id);
+            }
+
+        };
+        jTable_ingreso_Salida.getColumnModel().getColumn(10).setCellRenderer(new TableActionCellRender());
+        jTable_ingreso_Salida.getColumnModel().getColumn(10).setCellEditor(new TableActionCellEditor(event));
     }
 }

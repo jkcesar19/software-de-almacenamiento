@@ -21,6 +21,7 @@ com\system\business\UnidadBo.class
 com\system\table\Table.class
 com\system\view\jpAlta_articulo$5.class
 com\system\view\proveedor\VistaProveedor$3.class
+com\system\view\jpReporte$6.class
 com\system\identity\implementation\Tabla_IngresoImpldao.class
 com\system\identity\Usuario.class
 com\system\view\cliente\VistaCliente.class

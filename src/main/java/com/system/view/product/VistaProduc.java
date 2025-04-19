@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.awt.Cursor;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 
 
 public class VistaProduc extends javax.swing.JPanel {
@@ -289,7 +290,7 @@ public class VistaProduc extends javax.swing.JPanel {
     }//GEN-LAST:event_btnListarMousePressed
 
     private void btnModificarMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnModificarMousePressed
-//        if (!"".equals(lista_eliminar.usu))
+//        if (!"".equals(lista_eliminar.nom))
 //        {
 //            try
 //            {
@@ -306,11 +307,11 @@ public class VistaProduc extends javax.swing.JPanel {
 //            JOptionPane.showMessageDialog(this, "Seleccione el usuario",
 //                    "TRABAJADOR", JOptionPane.WARNING_MESSAGE);
 //        }
-//
+
     }//GEN-LAST:event_btnModificarMousePressed
 
     private void btnEliminarMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnEliminarMousePressed
-//        if (!"".equals(lista_eliminar.usu))
+//        if (!"".equals(lista_eliminar.nom))
 //        {
 //            char opt = 'E';
 //            try

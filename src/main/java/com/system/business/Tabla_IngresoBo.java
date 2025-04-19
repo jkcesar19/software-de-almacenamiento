@@ -1,4 +1,3 @@
-
 package com.system.business;
 
 import com.system.conexion.Conexion;
@@ -13,6 +12,7 @@ import javax.swing.table.DefaultTableModel;
  * @author llagu
  */
 public class Tabla_IngresoBo {
+
     public static DefaultTableModel ListaTable() throws Exception {
         DefaultTableModel materialTableModel = null;
         Connection con = Conexion.getConexion();
@@ -20,9 +20,9 @@ public class Tabla_IngresoBo {
             Tabla_IngresoDao usuarioDao = new Tabla_IngresoImpldao(con);
             Vector datoUsuario = usuarioDao.Lista();
             Vector columnas = new Vector();
-
+            columnas.add("N°");
             columnas.add("ARTICULO");
-            columnas.add("UNIDAD");
+            columnas.add("CANTIDAD");
             columnas.add("PRECIO");
             columnas.add("SUB T");
             columnas.add("DESCUENTO");
@@ -30,6 +30,7 @@ public class Tabla_IngresoBo {
             columnas.add("TOTAL");
             columnas.add("STOCK I");
             columnas.add("STOCK F");
+            columnas.add("PDF");
 
             materialTableModel = new DefaultTableModel(datoUsuario, columnas);
 
